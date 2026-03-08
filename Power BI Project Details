@@ -1,0 +1,135 @@
+Power BI Project: Zepto Inventory Dashboard
+
+1. Project Objective
+The objective of this project is to analyze inventory availability, pricing, discounts, and product weight to:
+Monitor product availability
+Track discount performance
+Compare MRP vs Selling Price
+Identify out-of-stock products
+Analyze inventory quantity and weight distribution
+
+This dashboard helps retail managers and store owners make better pricing and stock decisions.
+
+2. Dataset Description
+The dataset contains product-level inventory and pricing details.
+
+Column	Description
+Category	Product category
+Name	Product name
+MRP	Maximum Retail Price
+DiscountPercent	Discount offered
+AvailableQuantity	Available stock
+DiscountedSellingPrice	Final selling price
+WeightInGms	Product weight
+OutOfStock	Product availability status
+Quantity	Product unit quantity
+
+3. Data Cleaning in Power BI
+Steps performed in Power Query Editor:
+Imported Excel dataset
+Checked data types
+Removed duplicate rows
+Handled missing values
+Converted:
+Price columns → Currency
+Weight → Numeric
+Verified OutOfStock Boolean values
+
+4. Data Modeling
+No complex relationships were required since it is a single-table dataset.
+However, calculated fields were created.
+
+Calculated Columns
+1. Discount Amount
+Discount Amount = [MRP] - [discountedSellingPrice]
+2. Discount Value %
+Discount Value % = 
+DIVIDE([Discount Amount],[MRP]) * 100
+3. Stock Status
+Stock Status =
+IF([outOfStock] = TRUE(), "Out of Stock", "Available")
+
+5. Key KPIs for Dashboard
+Add Card Visuals:
+1️⃣ Total Products
+Total Products = COUNT(name)
+
+2️⃣ Total Available Quantity
+Total Stock = SUM(availableQuantity)
+
+3️⃣ Average Discount
+Avg Discount = AVERAGE(discountPercent)
+
+4️⃣ Total Inventory Weight
+Total Weight = SUM(weightInGms)
+
+5️⃣ Out of Stock Products
+Out of Stock Count =
+CALCULATE(COUNT(name), outOfStock = TRUE())
+
+
+7. Dashboard Visualizations
+1. KPI Cards (Top Section)
+Display:
+Total Products
+Total Inventory
+Average Discount
+Total Weight
+Out-of-stock products
+
+2. Product Price Comparison
+Clustered Column Chart
+Axis:
+Product Name
+Values:
+MRP
+Discounted Selling Price
+Purpose:
+Compare the original price vs selling price.
+
+3. Discount Analysis
+Bar Chart
+Axis:
+Product Name
+Value:
+DiscountPercent
+Insight:
+Identify products with the highest discount.
+
+4. Stock Availability
+Donut Chart
+Legend:
+Stock Status
+Values:
+Count of Products
+Insight:
+Shows available vs out-of-stock products.
+
+5. Inventory Quantity by Product
+Bar Chart
+Axis:
+Product Name
+Values:
+Quantity
+Purpose:
+Identify high stock vs low stock products.
+
+6. Product Weight Distribution
+Tree Map
+Category:
+Product Name
+Values:
+WeightInGms
+Insight:
+Visualize the weight share per product.
+
+7. Top Discounted Products
+Table Visual
+Columns:
+Product Name
+MRP
+DiscountPercent
+DiscountedSellingPrice
+Discount Amount
+Sort by highest discount.
+
